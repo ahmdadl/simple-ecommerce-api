@@ -1,5 +1,5 @@
 {
-    "name": "nwidart/core",
+    "name": "nwidart/users",
     "description": "",
     "authors": [
         {
@@ -15,17 +15,14 @@
     },
     "autoload": {
         "psr-4": {
-            "Modules\\Core\\": "app/",
-            "Modules\\Core\\Database\\Factories\\": "database/factories/",
-            "Modules\\Core\\Database\\Seeders\\": "database/seeders/"
-        },
-        "files": [
-            "app/helper_functions.php"
-        ]
+            "Modules\\Users\\": "app/",
+            "Modules\\Users\\Database\\Factories\\": "database/factories/",
+            "Modules\\Users\\Database\\Seeders\\": "database/seeders/"
+        }
     },
     "autoload-dev": {
         "psr-4": {
-            "Modules\\Core\\Tests\\": "tests/"
+            "Modules\\Users\\Tests\\": "tests/"
         }
     }
 }

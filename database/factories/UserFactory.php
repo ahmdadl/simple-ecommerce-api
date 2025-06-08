@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Modules\Users\Enums\UserRole;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -24,11 +25,14 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            "name" => fake()->name(),
+            "email" => fake()->unique()->safeEmail(),
+            "phone" => "201034" . random_int(100000, 999999),
+            "email_verified_at" => now(),
+            "password" => (static::$password ??= Hash::make("123123123")),
+            "remember_token" => Str::random(10),
+            "role" => UserRole::CUSTOMER,
+            "is_active" => true,
         ];
     }
 
@@ -41,4 +45,53 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+    /**
+     * Indicate that the model's active state.
+     */
+    public function unActive(): static
+    {
+        return $this->state(
+            fn(array $attributes) => [
+                "is_active" => false,
+            ]
+        );
+    }
+
+    /**
+     * Indicate that the model's role.
+     */
+    public function role(UserRole $userRole): static
+    {
+        return $this->state(
+            fn(array $attributes) => [
+                "role" => $userRole,
+            ]
+        );
+    }
+
+    /**
+     * Indicate that the model's role is admin.
+     */
+    public function admin(): static
+    {
+        return $this->state(
+            fn(array $attributes) => [
+                "role" => UserRole::ADMIN,
+            ]
+        );
+    }
+
+    /**
+     * Indicate that the model's role is admin.
+     */
+    public function customer(): static
+    {
+        return $this->state(
+            fn(array $attributes) => [
+                "role" => UserRole::CUSTOMER,
+            ]
+        );
+    }
+
 }
