@@ -1,0 +1,27 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - vendor/nesbot/carbon/extension.neon
+
+parameters:
+
+    paths:
+        - app/
+        - Modules/
+
+    # Level 10 is the highest level
+    level: 9
+
+    ignoreErrors:
+        - 
+            identifier: property.notFound
+        -
+            identifier: missingType.iterableValue
+
+    excludePaths:
+        - Modules/Core/app/Mixins/ (?)
+        - Modules/*/tests/**/* (?)
+        - Modules/*/app/Filament/**/* (?)
+        - Modules/*/app/Providers/*ServiceProvider.php (?)
+        - Modules/*/database/factories/*Factory.php (?)
+        - Modules/*/vendor/* (?)
+        - stubs/*/* (?)
