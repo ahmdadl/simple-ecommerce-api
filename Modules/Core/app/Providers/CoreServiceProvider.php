@@ -3,10 +3,12 @@
 namespace Modules\Core\Providers;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
+use Modules\Core\Mixins\BlueprintMixins;
 use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -39,43 +41,14 @@ class CoreServiceProvider extends ServiceProvider
     }
 
     /**
-     * configure models
-     */
-    protected function configureModels(): void
-    {
-        Model::shouldBeStrict(!$this->app->environment("production"));
-        DB::prohibitDestructiveCommands(
-            (bool) $this->app->environment("production")
-        );
-        Model::unguard();
-    }
-
-    /**
-     * configure filament
-     */
-    protected function configureFilament(): void
-    {
-        // pass
-    }
-
-    /**
-     * Register macros
-     */
-    protected function registerMacros(): void
-    {
-        Request::macro("email", function () {
-            /** @var \Illuminate\Http\Request $this */
-            return $this->string("email")->lower()->value();
-        });
-    }
-
-    /**
      * Register the service provider.
      */
     public function register(): void
     {
         // $this->app->register(EventServiceProvider::class);
-        // $this->app->register(RouteServiceProvider::class);
+        $this->app->register(RouteServiceProvider::class);
+
+        $this->registerMixins();
     }
 
     /**
@@ -176,5 +149,44 @@ class CoreServiceProvider extends ServiceProvider
         }
 
         return $paths;
+    }
+
+    /**
+     * configure models
+     */
+    protected function configureModels(): void
+    {
+        Model::shouldBeStrict(!$this->app->environment("production"));
+        DB::prohibitDestructiveCommands(
+            (bool) $this->app->environment("production")
+        );
+        Model::unguard();
+    }
+
+    /**
+     * configure filament
+     */
+    protected function configureFilament(): void
+    {
+        // pass
+    }
+
+    /**
+     * Register macros
+     */
+    protected function registerMacros(): void
+    {
+        Request::macro("email", function () {
+            /** @var \Illuminate\Http\Request $this */
+            return $this->string("email")->lower()->value();
+        });
+    }
+
+    /**
+     * Register mixins
+     */
+    protected function registerMixins(): void
+    {
+        Blueprint::mixin(new BlueprintMixins());
     }
 }
