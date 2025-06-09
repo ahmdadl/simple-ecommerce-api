@@ -7,10 +7,20 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Modules\Addresses\Actions\CreateAddressAction;
 use Modules\Addresses\Http\Requests\CreateAddressRequest;
+use Modules\Addresses\Models\Address;
 use Modules\Addresses\Transformers\AddressResource;
 
 class AddressesController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(
+        Request $request
+    ): JsonResponse {
+        return api()->records(AddressResource::collection(Address::all()));
+    }
+
     /**
      * Store a newly created resource in storage.
      */
