@@ -42,3 +42,36 @@ test("user_cannot_login", function () {
         "password_confirmation" => "123123123",
     ])->assertForbidden();
 });
+
+test("only_guest_can_register", function () {
+    postJson(route("api.auth.register"))->assertStatus(422);
+
+    $user = User::factory()->customer()->create();
+
+    actingAs($user, "customer");
+
+    postJson(route("api.auth.register"))->assertForbidden();
+});
+
+test("guest_cannot_register_with_invalid_data", function () {
+      postJson(route("api.auth.register"))
+        ->assertJsonValidationErrorFor("first_name")
+        ->assertJsonValidationErrorFor("last_name")
+        ->assertJsonValidationErrorFor("email")
+        ->assertJsonValidationErrorFor("phone")
+        ->assertJsonValidationErrorFor("password");
+});
+
+test("guest_can_register_with_valid_data", function () {
+
+    postJson(route("api.auth.register"), [
+        "first_name" => "John",
+        "last_name" => "Doe",
+        "email" => fake()->unique()->safeEmail,
+        "phone" => "01143456576",
+        "password" => ($password = "123123123"),
+        "password_confirmation" => $password,
+    ])
+        ->assertOk()
+        ->assertSee("access_token");
+});
