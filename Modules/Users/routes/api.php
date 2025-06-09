@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Users\Http\Controllers\AuthUserController;
+use Modules\Users\Http\Controllers\UserProfileController;
 use Modules\Users\Http\Controllers\UsersController;
 
 /*
@@ -25,4 +26,16 @@ Route::controller(AuthUserController::class)
             "forget-password"
         );
         Route::post("reset-password", "resetPassword")->name("reset-password");
+    });
+
+    Route::middleware(["auth:customer"])
+    ->name("profile.")
+    ->prefix("profile")
+    ->group(function () {
+        Route::controller(UserProfileController::class)->group(function () {
+            Route::patch("update", "updateProfile")->name("updateProfile");
+            Route::patch("change-password", "updatePassword")->name(
+                "changePassword"
+            );
+        });
     });
