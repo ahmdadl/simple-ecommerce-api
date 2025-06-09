@@ -2430,7 +2430,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the currently authenticated user.
          *
-         * @return \App\Models\User|null 
+         * @return \Modules\Users\Models\User|null 
          * @static 
          */
         public static function user()
@@ -2468,7 +2468,7 @@ namespace Illuminate\Support\Facades {
          * Log the given user ID into the application without sessions or cookies.
          *
          * @param mixed $id
-         * @return \App\Models\User|false 
+         * @return \Modules\Users\Models\User|false 
          * @static 
          */
         public static function onceUsingId($id)
@@ -2554,7 +2554,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param mixed $id
          * @param bool $remember
-         * @return \App\Models\User|false 
+         * @return \Modules\Users\Models\User|false 
          * @static 
          */
         public static function loginUsingId($id, $remember = false)
@@ -2609,7 +2609,7 @@ namespace Illuminate\Support\Facades {
          * The application must be using the AuthenticateSession middleware.
          *
          * @param string $password
-         * @return \App\Models\User|null 
+         * @return \Modules\Users\Models\User|null 
          * @throws \Illuminate\Auth\AuthenticationException
          * @static 
          */
@@ -2635,7 +2635,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the last user we attempted to authenticate.
          *
-         * @return \App\Models\User 
+         * @return \Modules\Users\Models\User 
          * @static 
          */
         public static function getLastAttempted()
@@ -2759,7 +2759,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Return the currently cached user.
          *
-         * @return \App\Models\User|null 
+         * @return \Modules\Users\Models\User|null 
          * @static 
          */
         public static function getUser()
@@ -2821,7 +2821,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Determine if the current user is authenticated. If not, throw an exception.
          *
-         * @return \App\Models\User 
+         * @return \Modules\Users\Models\User 
          * @throws \Illuminate\Auth\AuthenticationException
          * @static 
          */
@@ -23320,6 +23320,95 @@ namespace Illuminate\Http {
         public static function hasValidRelativeSignatureWhileIgnoring($ignoreQuery = [])
         {
             return \Illuminate\Http\Request::hasValidRelativeSignatureWhileIgnoring($ignoreQuery);
+        }
+
+        /**
+         * 
+         *
+         * @see \Modules\Core\Providers\CoreServiceProvider::registerMacros()
+         * @static 
+         */
+        public static function email()
+        {
+            return \Illuminate\Http\Request::email();
+        }
+
+        /**
+         * 
+         *
+         * @see \Modules\Core\Providers\CoreServiceProvider::registerMacros()
+         * @param string $key
+         * @static 
+         */
+        public static function lowercaseEmail($key = 'email')
+        {
+            return \Illuminate\Http\Request::lowercaseEmail($key);
+        }
+
+            }
+    }
+
+namespace Illuminate\Database\Eloquent\Factories {
+    /**
+     * 
+     *
+     * @template TModel of \Illuminate\Database\Eloquent\Model
+     * @method $this trashed()
+     */
+    class Factory {
+        /**
+         * 
+         *
+         * @see \Spatie\Translatable\TranslatableServiceProvider::packageRegistered()
+         * @param array|string $locales
+         * @param mixed|null $value
+         * @static 
+         */
+        public static function translations($locales, $value)
+        {
+            return \Illuminate\Database\Eloquent\Factories\Factory::translations($locales, $value);
+        }
+
+            }
+    }
+
+namespace Illuminate\Database\Schema {
+    /**
+     * 
+     *
+     */
+    class Blueprint {
+        /**
+         * 
+         *
+         * @see \Modules\Core\Mixins\BlueprintMixins::activeState()
+         * @static 
+         */
+        public static function activeState()
+        {
+            return \Illuminate\Database\Schema\Blueprint::activeState();
+        }
+
+        /**
+         * 
+         *
+         * @see \Modules\Core\Mixins\BlueprintMixins::sortOrder()
+         * @static 
+         */
+        public static function sortOrder()
+        {
+            return \Illuminate\Database\Schema\Blueprint::sortOrder();
+        }
+
+        /**
+         * 
+         *
+         * @see \Modules\Core\Mixins\BlueprintMixins::uid()
+         * @static 
+         */
+        public static function uid()
+        {
+            return \Illuminate\Database\Schema\Blueprint::uid();
         }
 
             }

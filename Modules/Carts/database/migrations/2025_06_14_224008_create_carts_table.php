@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create("carts", function (Blueprint $table) {
             $table->uid();
-            $table->foreignUlid("user_id")->constrained();
+            $table->foreignUlid("user_id")->constrained("users");
             $table
                 ->foreignUlid("shipping_address_id")
                 ->nullable()
