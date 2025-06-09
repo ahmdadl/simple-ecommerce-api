@@ -7,8 +7,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Modules\Users\Actions\Auth\LoginUserAction;
 use Modules\Users\Actions\Auth\RegisterUserAction;
+use Modules\Users\Actions\Auth\UserForgetPasswordAction;
+use Modules\Users\Actions\Auth\UserResetPasswordAction;
 use Modules\Users\Http\Requests\Auth\LoginUserRequest;
 use Modules\Users\Http\Requests\Auth\RegisterUserRequest;
+use Modules\Users\Http\Requests\Auth\UserResetPasswordRequest;
 use Modules\Users\Transformers\CustomerResource;
 
 class AuthUserController extends Controller
@@ -43,5 +46,37 @@ class AuthUserController extends Controller
         return api()->success([
             "record" => new CustomerResource($user),
         ]);
+    }
+
+    /**
+     * forget user password
+     */
+    public function forgetPassword(
+        Request $request,
+        UserForgetPasswordAction $action
+    ): JsonResponse {
+        ["email" => $email] = $request->validate([
+            "email" => "required|email|max:150",
+        ]);
+
+        $sent = $action->handle($email);
+
+        if (!$sent) {
+            return api()->error(__("users::t.invalid_credentials"));
+        }
+
+        return api()->noContent();
+    }
+
+    /**
+     * reset user password
+     */
+    public function resetPassword(
+        UserResetPasswordRequest $request,
+        UserResetPasswordAction $action
+    ): JsonResponse {
+        $user = $action->handle($request->validated());
+
+        return api()->record(new CustomerResource($user));
     }
 }
