@@ -3,8 +3,10 @@
 namespace Modules\Categories\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Modules\Categories\Models\Category;
+use Modules\Categories\Transformers\CategoryResource;
 
 class CategoriesController extends Controller
 {
@@ -13,48 +15,21 @@ class CategoriesController extends Controller
      */
     public function index(): JsonResponse
     {
-        //
+        $categories = Category::withCount("products")->active()->get();
 
-        return response()->json([]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): JsonResponse
-    {
-        //
-
-        return response()->json([]);
+        return api()->records(CategoryResource::collection($categories));
     }
 
     /**
      * Show the specified resource.
      */
-    public function show(mixed $id): JsonResponse
+    public function show(Request $request, Category $category): JsonResponse
     {
-        //
+        $request->merge(["category" => $category->id]);
 
-        return response()->json([]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, mixed $id): JsonResponse
-    {
-        //
-
-        return response()->json([]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(mixed $id): JsonResponse
-    {
-        //
-
-        return response()->json([]);
+        return api()->success([
+            "category" => new CategoryResource($category),
+            // ...GetProductsAction::new()->handle($request),
+        ]);
     }
 }

@@ -3,5 +3,6 @@
     "Users": true,
     "Cities": true,
     "Addresses": true,
-    "Categories": true
+    "Categories": true,
+    "Brands": true
 }

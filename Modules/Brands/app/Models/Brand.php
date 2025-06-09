@@ -1,26 +1,21 @@
 <?php
 
-namespace Modules\Categories\Models;
+namespace Modules\Brands\Models;
 
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Modules\Categories\Database\Factories\CategoryFactory;
+use Spatie\Translatable\HasTranslations;
+use Modules\Brands\Database\Factories\BrandFactory;
 use Modules\Core\Models\Scopes\HasActiveState;
-use Spatie\LaravelPackageTools\Concerns\Package\HasTranslations;
 
-#[UseFactory(CategoryFactory::class)]
-class Category extends Model
+#[UseFactory(BrandFactory::class)]
+class Brand extends Model
 {
-    /** @use HasFactory<CategoryFactory> */
-    use HasFactory, HasUlids,
-    HasActiveState,
-    HasTranslations,
-    Sluggable,
-    SoftDeletes;
+    /** @use HasFactory<BrandFactory> */
+    use HasFactory, HasUlids,HasTranslations, HasActiveState, SoftDeletes;
 
     public array $translatable = ["title", "description"];
 
@@ -62,5 +57,5 @@ class Category extends Model
     // public function products(): HasMany
     // {
     //     return $this->hasMany(Product::class);
-    // }   
+    // }  
 }
