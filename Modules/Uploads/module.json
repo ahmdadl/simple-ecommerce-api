@@ -1,0 +1,11 @@
+{
+    "name": "Uploads",
+    "alias": "uploads",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Uploads\\Providers\\UploadsServiceProvider"
+    ],
+    "files": []
+}

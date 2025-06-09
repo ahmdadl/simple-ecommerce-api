@@ -5,5 +5,6 @@
     "Addresses": true,
     "Categories": true,
     "Brands": true,
-    "Products": true
+    "Products": true,
+    "Uploads": true
 }
