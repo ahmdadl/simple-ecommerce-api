@@ -1,6 +1,8 @@
 <?php
 
+use Modules\Users\Models\Customer;
 use Modules\Users\Models\User;
+use Modules\Users\Notifications\NewCustomerNotification;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\postJson;
@@ -64,6 +66,12 @@ test("guest_cannot_register_with_invalid_data", function () {
 
 test("guest_can_register_with_valid_data", function () {
 
+    Notification::fake();
+
+    Notification::assertNothingSent();
+
+    Notification::assertCount(0);
+
     postJson(route("api.auth.register"), [
         "first_name" => "John",
         "last_name" => "Doe",
@@ -74,4 +82,7 @@ test("guest_can_register_with_valid_data", function () {
     ])
         ->assertOk()
         ->assertSee("access_token");
+
+    Notification::assertCount(1);
+    Notification::assertSentTo(Customer::latest()->first(), NewCustomerNotification::class);
 });

@@ -23,6 +23,9 @@ class RegisterUserAction
         $access_token = $user->createToken("web")
             ->plainTextToken;
 
+
+        rescue(fn() => $user->notify(new NewCustomerNotification()));
+
         return [$user, $access_token];
     }
 }
