@@ -1,5 +1,6 @@
 {
     "Core": true,
     "Users": true,
-    "Cities": true
+    "Cities": true,
+    "Addresses": true
 }

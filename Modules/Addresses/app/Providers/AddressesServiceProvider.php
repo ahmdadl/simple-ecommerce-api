@@ -1,25 +1,20 @@
 <?php
 
-namespace Modules\Core\Providers;
+namespace Modules\Addresses\Providers;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
-use Modules\Core\Mixins\BlueprintMixins;
 use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-class CoreServiceProvider extends ServiceProvider
+class AddressesServiceProvider extends ServiceProvider
 {
     use PathNamespace;
 
-    protected string $name = 'Core';
+    protected string $name = 'Addresses';
 
-    protected string $nameLower = 'core';
+    protected string $nameLower = 'addresses';
 
     /**
      * Boot the application events.
@@ -32,12 +27,6 @@ class CoreServiceProvider extends ServiceProvider
         // $this->registerConfig();
         // $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
-
-        $this->configureModels();
-
-        $this->configureFilament();
-
-        $this->registerMacros();
     }
 
     /**
@@ -45,10 +34,8 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // $this->app->register(EventServiceProvider::class);
+        $this->app->register(EventServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
-
-        $this->registerMixins();
     }
 
     /**
@@ -149,54 +136,5 @@ class CoreServiceProvider extends ServiceProvider
         }
 
         return $paths;
-    }
-
-    /**
-     * configure models
-     */
-    protected function configureModels(): void
-    {
-        Model::shouldBeStrict(!$this->app->environment("production"));
-        DB::prohibitDestructiveCommands(
-            (bool) $this->app->environment("production")
-        );
-        Model::unguard();
-    }
-
-    /**
-     * configure filament
-     */
-    protected function configureFilament(): void
-    {
-        // pass
-    }
-
-    /**
-     * Register macros
-     */
-    protected function registerMacros(): void
-    {
-        Request::macro("email", function () {
-            /** @var \Illuminate\Http\Request $this */
-            return $this->string("email")->lower()->value();
-        });
-
-        Request::macro("lowercaseEmail", function (string $key = "email") {
-            /** @var \Illuminate\Http\Request $this */
-            if ($this->has($key)) {
-                $this->merge([
-                    $key => strtolower($this->input($key)),
-                ]);
-            }
-            return $this;
-        });
-    }
-
-    /**
-     * Register mixins
-     */
-    protected function registerMixins(): void
-    {
-        Blueprint::mixin(new BlueprintMixins());
     }
 }
