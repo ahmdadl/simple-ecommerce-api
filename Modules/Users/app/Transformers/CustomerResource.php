@@ -18,6 +18,7 @@ class CustomerResource extends JsonResource
             "email" => $this->email,
             "phone" => $this->phone,
             "role" => $this->role,
+            "cart_items_count" => $this->cartItemsCount,
             "access_token" => $this->when(
                 !empty($this->access_token ?? ""),
                 $this->access_token ?? ""

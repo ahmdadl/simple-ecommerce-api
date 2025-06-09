@@ -6,5 +6,6 @@
     "Categories": true,
     "Brands": true,
     "Products": true,
-    "Uploads": true
+    "Uploads": true,
+    "Carts": true
 }

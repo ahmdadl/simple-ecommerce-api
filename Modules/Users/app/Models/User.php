@@ -7,10 +7,16 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Modules\Addresses\Models\Address;
+use Modules\Carts\Models\Cart;
+use Modules\Carts\Models\CartItem;
 use Modules\Core\Models\Scopes\HasActiveState;
 use Modules\Users\Database\Factories\UserFactory;
 use Modules\Users\Enums\UserRole;
@@ -102,5 +108,49 @@ class User extends Authenticatable
         return Attribute::make(
             get: fn() => static::$role === UserRole::CUSTOMER
         )->shouldCache();
+    }
+
+    
+    /**
+     * cart items count
+     * @return Attribute<int, void>
+     */
+    public function cartItemsCount(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->cartItems()->count()
+        )->shouldCache();
+    }
+
+
+    /**
+     * user cart
+     * @return HasOne<Cart, $this>
+     */
+    public function cart(): HasOne
+    {
+        return $this->hasOne(Cart::class, "user_id");
+    }
+
+    /**
+     * user cart items
+     * @return HasManyThrough<CartItem, Cart, $this>
+     */
+    public function cartItems(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            CartItem::class,
+            Cart::class,
+            "user_id"
+        );
+    }
+
+    /**
+     * get user addresses
+     * @return HasMany<Address, $this>
+     */
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(Address::class, "user_id");
     }
 }

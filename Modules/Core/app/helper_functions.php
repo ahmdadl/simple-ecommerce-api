@@ -96,4 +96,12 @@ if (!function_exists("frontUrl")) {
     }
 }
 
-
+if (!function_exists("cartService")) {
+    /**
+     * get current user cart service
+     */
+    function cartService(): Modules\Carts\Services\CartService
+    {
+        return app(Modules\Carts\Services\CartService::class);
+    }
+}
