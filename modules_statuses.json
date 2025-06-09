@@ -2,5 +2,6 @@
     "Core": true,
     "Users": true,
     "Cities": true,
-    "Addresses": true
+    "Addresses": true,
+    "Categories": true
 }
