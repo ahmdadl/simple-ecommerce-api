@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Users\Http\Controllers\AuthUserController;
 use Modules\Users\Http\Controllers\UsersController;
 
 /*
@@ -13,7 +14,15 @@ use Modules\Users\Http\Controllers\UsersController;
  * is assigned the "api" middleware group. Enjoy building your API!
  *
 */
+// guest
+Route::controller(AuthUserController::class)
+    ->name("auth.")
+    ->group(function () {
+        Route::post("login", "login")->name("login");
+        Route::post("register", "register")->name("register");
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    // Route::apiResource('users', UsersController::class)->names('users');
-});
+        Route::post("forget-password", "forgetPassword")->name(
+            "forget-password"
+        );
+        Route::post("reset-password", "resetPassword")->name("reset-password");
+    });
