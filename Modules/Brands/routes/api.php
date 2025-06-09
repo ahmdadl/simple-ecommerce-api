@@ -14,6 +14,8 @@ use Modules\Brands\Http\Controllers\BrandsController;
  *
 */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    // Route::apiResource('brands', BrandsController::class)->names('brands');
-});
+Route::apiResource("brands", BrandsController::class)
+    ->parameters([
+        "brands" => "activeBrand",
+    ])
+    ->only(["index", "show"]);
