@@ -11,9 +11,19 @@
 |
 */
 
+use Modules\Users\Models\User;
+use Tests\TestCase;
+
+use function Pest\Laravel\actingAs;
+use function Pest\Laravel\withoutExceptionHandling;
+
 pest()->extend(Tests\TestCase::class)
- // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
-    ->in('Feature');
+    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    ->in("../Modules/*/tests/**/*Test.php");
+
+beforeAll(function () {
+    withoutExceptionHandling();
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +51,28 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+/**
+ * login as a customer
+ */
+function asCustomer(?User $customer = null): TestCase
 {
-    // ..
+    return actingAs(
+        $customer ?? User::factory()->customer()->create(),
+        "customer"
+    );
+}
+
+/**
+ * generate fake egyptian phone
+ */
+function fakePhone(): string
+{
+    $prefixes = ["010", "011", "012"];
+
+    /** @var string */
+    $prefix = $prefixes[array_rand($prefixes)];
+
+    $number = sprintf("%08d", rand(0, 99999999));
+
+    return $prefix . $number;
 }
