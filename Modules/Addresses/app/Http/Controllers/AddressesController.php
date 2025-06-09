@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Modules\Addresses\Actions\CreateAddressAction;
 use Modules\Addresses\Http\Requests\CreateAddressRequest;
+use Modules\Addresses\Http\Requests\UpdateAddressRequest;
 use Modules\Addresses\Models\Address;
 use Modules\Addresses\Transformers\AddressResource;
 
@@ -27,6 +28,18 @@ class AddressesController extends Controller
     public function store(CreateAddressRequest $request, CreateAddressAction $action): JsonResponse
     {
         $address = $action->handle($request->validated());
+
+        return api()->record(new AddressResource($address));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(
+        UpdateAddressRequest $request,
+        Address $address
+    ): JsonResponse {
+        $address->update($request->validated());
 
         return api()->record(new AddressResource($address));
     }

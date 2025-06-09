@@ -4,8 +4,6 @@ namespace Modules\Addresses\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Validator;
-use Modules\Core\Rules\LowercaseEmail;
 use Modules\Core\Rules\PhoneNumber;
 
 class CreateAddressRequest extends FormRequest
