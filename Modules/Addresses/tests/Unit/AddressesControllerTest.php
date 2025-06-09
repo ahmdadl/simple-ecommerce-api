@@ -27,9 +27,9 @@ test("user_can_create_address_with_valid_data", function () {
 });
 
 test('user_can_not_update_address_with_invalid_data', function () {
-    asCustomer();
+    asCustomer($user = User::factory()->customer()->create());
     
-    $address = Address::factory()->create();
+    $address = Address::factory()->for($user)->create();
     
     putJson(route('api.addresses.update', $address->id), ["first_name" => ""])->assertJsonValidationErrorFor('first_name');
 });
