@@ -3,6 +3,8 @@
 use Modules\Addresses\Models\Address;
 use Modules\Users\Models\User;
 
+use function Pest\Laravel\assertDatabaseMissing;
+use function Pest\Laravel\deleteJson;
 use function Pest\Laravel\postJson;
 use function Pest\Laravel\putJson;
 
@@ -41,4 +43,20 @@ test('user_can_update_address_with_valid_data', function () {
     $data["first_name"] = "John";
     
     putJson(route('api.addresses.update', $address->id), $data)->assertOk()->assertSee("John");
+});
+
+test('user_can_delete_address', function () {
+    asCustomer($user = User::factory()->customer()->create());
+    
+    $address = Address::factory()->for($user)->create();
+    
+    deleteJson(route('api.addresses.destroy', $address->id))->assertNoContent();
+});
+
+test('user_can_not_delete_address_of_another_user', function () {
+    asCustomer($user = User::factory()->customer()->create());
+    
+    $address = Address::factory()->create();
+    
+    deleteJson(route('api.addresses.destroy', $address->id))->assertNotFound();
 });

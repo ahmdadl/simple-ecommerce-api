@@ -4,6 +4,7 @@ namespace Modules\Addresses\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Modules\Addresses\Models\Address;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -17,6 +18,12 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(): void
     {
         parent::boot();
+
+        Route::bind("myAddress", function ($value) {
+            return Address::where("id", $value)
+                ->where("user_id", user()?->id)
+                ->firstOrFail();
+        });
     }
 
     /**
@@ -25,7 +32,7 @@ class RouteServiceProvider extends ServiceProvider
     public function map(): void
     {
         $this->mapApiRoutes();
-        $this->mapWebRoutes();
+        // $this->mapWebRoutes();
     }
 
     /**

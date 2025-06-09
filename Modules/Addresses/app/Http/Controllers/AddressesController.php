@@ -43,4 +43,14 @@ class AddressesController extends Controller
 
         return api()->record(new AddressResource($address));
     }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Address $address): JsonResponse
+    {
+        $address->delete();
+
+        return api()->noContent();
+    }
 }

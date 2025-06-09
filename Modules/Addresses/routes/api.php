@@ -14,6 +14,7 @@ use Modules\Addresses\Http\Controllers\AddressesController;
  *
 */
 
-Route::middleware(['auth:customer'])->group(function () {
-    Route::apiResource('addresses', AddressesController::class);
-});
+Route::apiResource("addresses", AddressesController::class)
+    ->parameter("addresses", "myAddress")
+    ->only(["index", "store", "update", "destroy"])
+    ->middleware("auth:customer");
