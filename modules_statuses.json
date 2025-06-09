@@ -4,5 +4,6 @@
     "Cities": true,
     "Addresses": true,
     "Categories": true,
-    "Brands": true
+    "Brands": true,
+    "Products": true
 }

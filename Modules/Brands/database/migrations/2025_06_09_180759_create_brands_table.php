@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('brands', function (Blueprint $table) {
             $table->uid();
-            $table->string("title");
+            $table->json("title");
+            $table->json("description")->nullable();
             $table->string("slug")->nullable();
             $table->string("image")->nullable();
+            $table->boolean("is_main")->default(value: false);
             $table->activeState();
             $table->timestamps();
             $table->softDeletes();

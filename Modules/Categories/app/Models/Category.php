@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Categories\Database\Factories\CategoryFactory;
 use Modules\Core\Models\Scopes\HasActiveState;
-use Spatie\LaravelPackageTools\Concerns\Package\HasTranslations;
+use Modules\Products\Models\Product;
+use Spatie\Translatable\HasTranslations;
 
 #[UseFactory(CategoryFactory::class)]
 class Category extends Model
@@ -59,8 +61,8 @@ class Category extends Model
      *
      * @return HasMany<Product, $this>
      */
-    // public function products(): HasMany
-    // {
-    //     return $this->hasMany(Product::class);
-    // }   
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }   
 }
