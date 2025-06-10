@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Addresses\Transformers;
+namespace Modules\Orders\Transformers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Modules\Cities\Transformers\CityResource;
+use Modules\Addresses\Transformers\AddressResource;
 
-class AddressResource extends JsonResource
+class OrderAddressResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,17 +15,18 @@ class AddressResource extends JsonResource
     {
         return [
             "id" => $this->id,
+            "address_id" => $this->address_id,
             "user_id" => $this->user_id,
             "city_id" => $this->city_id,
+            "city_title" => $this->city_title,
             "name" => $this->name,
-            "first_name" => $this->first_name,
-            "last_name" => $this->last_name,
             "title" => $this->title,
             "address" => $this->address,
-            "email" => $this->email,
             "phone" => $this->phone,
-            "is_default" => $this->is_default,
-            "city" => new CityResource($this->whenLoaded("city")),
+
+            "addressRecord" => new AddressResource(
+                $this->whenLoaded("address")
+            ),
         ];
     }
 }

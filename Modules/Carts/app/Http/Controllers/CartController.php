@@ -43,7 +43,7 @@ class CartController extends Controller
         if (in_array("addresses", $loadedArray)) {
             $response["addresses"] = AddressResource::collection(
                 $addresses = Address::where("user_id", user()?->id)
-                    ->with(["government", "city"])
+                    ->with(["city"])
                     ->get()
             );
 

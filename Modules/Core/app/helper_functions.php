@@ -105,3 +105,16 @@ if (!function_exists("cartService")) {
         return app(Modules\Carts\Services\CartService::class);
     }
 }
+
+if (!function_exists("asUser")) {
+    function asUser(User $user, callable $callback, ?string $guard = null): void
+    {
+        $currentUser = auth($guard)->user();
+
+        auth($guard)->setUser($user);
+
+        $callback();
+
+        auth($guard)->setUser($currentUser);
+    }
+}

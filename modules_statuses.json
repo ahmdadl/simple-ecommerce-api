@@ -7,5 +7,6 @@
     "Brands": true,
     "Products": true,
     "Uploads": true,
-    "Carts": true
+    "Carts": true,
+    "Orders": true
 }
