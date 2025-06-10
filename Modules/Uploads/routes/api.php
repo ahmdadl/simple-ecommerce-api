@@ -13,7 +13,7 @@ use Modules\Uploads\Http\Controllers\UploadsController;
  * is assigned the "api" middleware group. Enjoy building your API!
  *
 */
-
-Route::get("/uploads/{upload}", [UploadsController::class, "show"])->name(
-    "uploads.show"
-);
+Route::controller(UploadsController::class)
+    ->group(function () {
+        Route::post("/uploads", "store")->name("uploads.store");
+    });
