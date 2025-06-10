@@ -27,8 +27,7 @@ class CreateOrderController extends Controller
             // should be moved to queue
             $order = $action->handle(
                 cartService()->cart,
-                $request->string("payment_method")->value(),
-                $request->input("receipt")
+                $request->string("payment_method")->value()
             );
 
             cartService()->destroy();

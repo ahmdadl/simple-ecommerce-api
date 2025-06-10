@@ -58,6 +58,7 @@ class OrderAddress extends Model
             "city_title" => $address->city?->title,
             "address" => $address->address,
             "phone" => $address->phone,
+            "name" => $address->name,
         ]);
     }
 }

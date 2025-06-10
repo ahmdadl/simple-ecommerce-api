@@ -27,7 +27,7 @@ class OrderItemProduct extends Model
     protected function casts(): array
     {
         return [
-            "images" => UploadableMultiplePathsCast::class,
+            "images" => 'array',
         ];
     }
 

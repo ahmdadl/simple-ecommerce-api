@@ -50,21 +50,20 @@ class CreateOrderRequest extends FormRequest
                         ->add("", __("orders::t.cart_is_empty"));
                 }
 
-                if (!user()->isGuest) {
-                    if ($cart->shipping_address_id) {
-                        if (
-                            !user()
-                                ?->addresses()
-                                ->where("id", $cart->shipping_address_id)
-                                ->exists()
-                        ) {
-                            $validator
-                                ->errors()
-                                ->add(
-                                    "",
-                                    __("orders::t.shipping_address_not_found")
-                                );
-                        }
+
+                if ($cart->shipping_address_id) {
+                    if (
+                        !user()
+                            ?->addresses()
+                            ->where("id", $cart->shipping_address_id)
+                            ->exists()
+                    ) {
+                        $validator
+                            ->errors()
+                            ->add(
+                                "",
+                                __("orders::t.shipping_address_not_found")
+                            );
                     }
                 }
             },
