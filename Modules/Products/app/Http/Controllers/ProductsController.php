@@ -17,7 +17,7 @@ class ProductsController extends Controller
     {
         $products = Product::with(['category', 'brand'])->active()->paginate();
 
-        return api()->records(ProductResource::collection($products));
+        return api()->paginate($products, ProductResource::class);
     }
 
     /**
