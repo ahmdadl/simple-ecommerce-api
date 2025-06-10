@@ -1,11 +1,13 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "ahmdadl/simple-ecommerce-api",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "Simple Ecommerce API built with Laravel",
     "keywords": [
         "laravel",
-        "framework"
+        "framework",
+        "ecommerce",
+        "api"
     ],
     "license": "MIT",
     "require": {
