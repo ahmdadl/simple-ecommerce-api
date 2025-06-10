@@ -7,7 +7,7 @@
 > Front end sample is available on [this repo](https://github.com/ahmdadl/simple-ecommerce-spa)
 
 > **⚠️ Please Note**  
-> Postman Collection is available on [this link](https://github.com/ahmdadl/simple-ecommerce-api/blob/main/Postman%20Collection/Simple%20Ecommerce%20API.postman_collection.json)
+> Postman Collection is available on [this link](https://github.com/ahmdadl/simple-ecommerce-api/blob/main/simple-commerce.postman_collection.json)
 
 ## About
 
