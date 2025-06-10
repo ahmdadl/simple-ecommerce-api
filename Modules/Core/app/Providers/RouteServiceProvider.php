@@ -18,12 +18,6 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(): void
     {
         parent::boot();
-
-        Route::bind("activeProduct", function ($value) {
-            return Product::where("slug", $value)
-                ->where("is_active", true)
-                ->firstOrFail();
-        });
     }
 
     /**

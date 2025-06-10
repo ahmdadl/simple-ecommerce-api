@@ -4,6 +4,7 @@ namespace Modules\Products\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Modules\Products\Models\Product;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -17,6 +18,12 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(): void
     {
         parent::boot();
+
+        Route::bind("activeProduct", function ($value) {
+            return Product::where("slug", $value)
+                ->where("is_active", true)
+                ->firstOrFail();
+        });
     }
 
     /**
