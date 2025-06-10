@@ -12,9 +12,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Brands\Models\Brand;
+use Modules\Carts\Models\CartItem;
 use Modules\Categories\Models\Category;
 use Modules\Core\Models\Scopes\HasActiveState;
+use Modules\Orders\Models\OrderItem;
 use Modules\Products\Database\Factories\ProductFactory;
 use Spatie\Translatable\HasTranslations;
 
@@ -159,5 +162,23 @@ class Product extends Model
     public function brand(): BelongsTo
     {
         return $this->belongsTo(related: Brand::class);
+    }
+
+    /**
+     * product cart items
+     * @return HasMany<CartItem, $this>
+     */
+    public function cartItems(): HasMany
+    {
+        return $this->hasMany(CartItem::class);
+    }
+
+    /**
+     * product ordered items
+     * @return HasMany<OrderItem, $this>
+     */
+    public function orderItems(): HasMany
+    {
+        return $this->hasMany(OrderItem::class);
     }
 }
